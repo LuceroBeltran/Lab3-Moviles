@@ -3,45 +3,92 @@ package com.example.exploracioncomponentescompose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.exploracioncomponentescompose.ui.theme.ExploracionComponentesComposeTheme
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.font.FontWeight
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
-            ExploracionComponentesComposeTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+            ExploracionComponentesCompose()
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun ExploracionComponentesCompose() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text("Exploración de Componentes", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(16.dp))
+
+        TextExample()
+
+        Spacer(modifier = Modifier.height(16.dp))
+        ButtonExample()
+
+        Spacer(modifier = Modifier.height(16.dp))
+        TextFieldExample()
+
+        Spacer(modifier = Modifier.height(16.dp))
+        RowExample()
+    }
+}
+
+@Composable
+fun TextExample() {
     Text(
-        text = "Hello $name!",
-        modifier = modifier
+        text = "Este es un componente Text",
+        fontSize = 20.sp
     )
+}
+
+@Composable
+fun ButtonExample() {
+    Button(onClick = { /* Acción del botón */ }) {
+        Text("Este es un Button")
+    }
+}
+
+@Composable
+fun TextFieldExample() {
+    var textState by remember { mutableStateOf("") }
+    TextField(
+        value = textState,
+        onValueChange = { textState = it },
+        label = { Text("Ingrese un texto") }
+    )
+}
+
+@Composable
+fun RowExample() {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceAround
+    ) {
+        Button(onClick = { /* Acción Aceptar */ }) {
+            Text("Aceptar")
+        }
+        Button(onClick = { /* Acción Rechazar */ }) {
+            Text("Rechazar")
+        }
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
-    ExploracionComponentesComposeTheme {
-        Greeting("Android")
-    }
+fun PreviewExploracionComponentes() {
+    ExploracionComponentesCompose()
 }
